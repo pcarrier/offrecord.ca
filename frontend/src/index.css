@@ -1,0 +1,146 @@
+:root,
+body {
+  color-scheme: dark light;
+  margin: 0;
+  padding: 0;
+  background-color: light-dark(#fff, #000);
+  font-family: sans-serif;
+  font-variant-numeric: tabular-nums;
+}
+
+div,
+dl,
+dt,
+dd,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  margin: 0;
+  padding: 0;
+}
+
+dd {
+  margin-left: 4em;
+}
+
+p {
+  margin: 0.5em 0;
+}
+
+#app {
+  height: 100dvh;
+  width: 100dvw;
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  justify-content: center;
+}
+
+main,
+header,
+footer {
+  padding: 0.5em;
+}
+
+header,
+footer,
+button,
+input,
+textarea {
+  background-color: light-dark(#eee, #111);
+}
+
+button,
+input,
+textarea {
+  border-radius: 0.5em;
+  border: 1px solid light-dark(#000, #fff);
+  font-size: 1rem;
+}
+
+input,
+textarea {
+  font-family: monospace;
+}
+
+button {
+  font-family: inherit;
+}
+
+main {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column-reverse;
+  overflow-y: scroll;
+}
+
+main article {
+  font-style: italic;
+}
+
+#app footer form {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  gap: 0.5em;
+}
+
+#app footer form * {
+  align-self: flex-end;
+}
+
+textarea {
+  flex-grow: 1;
+  height: 1em;
+}
+
+header h1 {
+  font-size: 1rem;
+}
+
+#intro {
+  text-align: center;
+}
+
+#channel {
+  width: min(86ch, calc(100% - 9ch));
+}
+
+#nick {
+  width: 9ch;
+}
+
+em.red {
+  font-style: normal;
+  color: #f00;
+}
+
+button:hover,
+input[type="submit"]:hover {
+  cursor: pointer;
+  background-color: light-dark(#000, #fff);
+  color: light-dark(#fff, #000);
+}
+
+header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+header h1 {
+  width: 100%;
+  text-align: center;
+}
+
+header p {
+  margin: 0;
+  padding: 0.5em 0 0 0;
+  display: flex;
+  align-items: baseline;
+  gap: 0.5em;
+}
