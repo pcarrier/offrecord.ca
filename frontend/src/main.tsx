@@ -221,20 +221,17 @@ const App = () => {
         <article>
           <p>
             Select a channel name above; it is only visible to its participants,
-            and used as the encryption key for every message.
-          </p>
-          <p>Nobody can decrypt anything without the channel name.</p>
-          <p>
-            At most 10 encrypted messages and their timestamps are kept on the
-            server, only in memory.
+            and used as the encryption key for every message. Nobody can read
+            messages without it. It is not transmitted to the server.
           </p>
           <p>
-            No IP or identifiable information, not even the nickname, are kept
-            in clear.
+            At most 10 timestamped encrypted messages are kept on the server. No
+            IP or identifiable information, not even the nickname, are kept in
+            clear.
           </p>
           <p>
-            Anybody can wipe channels whenever they'd like. Server restarts
-            maybe occur at any time and wipe everything.
+            Anybody can wipe channels whenever they'd like. Server restarts wipe
+            everything as history is only in-memory.
           </p>
           <p>
             You do not have to trust me and can run your own instance if you
