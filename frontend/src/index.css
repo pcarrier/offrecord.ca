@@ -30,6 +30,10 @@ dd {
   margin-left: 2em;
 }
 
+img {
+  max-width: 100%;
+}
+
 #app {
   height: 100dvh;
   width: 100dvw;
