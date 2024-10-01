@@ -222,7 +222,7 @@ const App = () => {
           <p>
             Select a channel name above; it is only visible to its participants,
             and used as the encryption key for every message. Nobody can read
-            messages without it. It is not transmitted to the server.
+            messages without it.
           </p>
           <p>
             At most 10 timestamped encrypted messages are kept on the server. No
