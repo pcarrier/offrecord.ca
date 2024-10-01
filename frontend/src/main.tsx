@@ -6,9 +6,20 @@ import "./index.css";
 import Sockette from "sockette";
 import * as nacl from "tweetnacl";
 import { decode, encode } from "cbor-x";
-import { parse } from "marked";
+import { Renderer, parse } from "marked";
 import { useEffect, useRef } from "preact/hooks";
 import QRCode from "qrcode";
+
+const renderer = new Renderer();
+renderer.image = ({ href, title, text }) => {
+  if (href.startsWith("data:image/")) {
+    return `<img src="${href}" alt="${text}" title="${title}" />`;
+  }
+  if (title) {
+    return `![${text}](${href} "${title}")`;
+  }
+  return `![${text}](${href})`;
+};
 
 const state = signal<State>({
   msgs: [],
@@ -164,6 +175,7 @@ const App = () => {
               pedantic: false,
               gfm: true,
               breaks: true,
+              renderer,
             }),
           }}
         />
