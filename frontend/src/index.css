@@ -96,7 +96,7 @@ header h1 {
 }
 
 #channel {
-  width: min(86ch, calc(100% - 9ch));
+  width: min(86ch, calc(100% - 24ch));
 }
 
 #nick {
@@ -132,4 +132,11 @@ header p {
   display: flex;
   align-items: baseline;
   gap: 0.5em;
+}
+
+canvas#qr {
+  position: fixed;
+  top: 0;
+  right: 0;
+  cursor: pointer;
 }

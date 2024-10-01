@@ -13,11 +13,13 @@
     "cbor-x": "^1.6.0",
     "marked": "^14.1.2",
     "preact": "^10.23.1",
+    "qrcode": "^1.5.4",
     "sockette": "^2.0.6",
     "tweetnacl": "^1.0.3"
   },
   "devDependencies": {
     "@preact/preset-vite": "^2.9.0",
+    "@types/qrcode": "^1.5.5",
     "@vitejs/plugin-basic-ssl": "^1.1.0",
     "prettier": "^3.3.3",
     "typescript": "^5.5.3",

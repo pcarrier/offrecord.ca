@@ -7,6 +7,8 @@ import Sockette from "sockette";
 import * as nacl from "tweetnacl";
 import { decode, encode } from "cbor-x";
 import { parse } from "marked";
+import { useEffect, useRef } from "preact/hooks";
+import QRCode from "qrcode";
 
 const state = signal<State>({
   msgs: [],
@@ -18,6 +20,7 @@ const state = signal<State>({
       ][1] as string),
     "",
   ],
+  zoomCanvas: false,
 });
 
 addEventListener("hashchange", reconnect);
@@ -91,9 +94,11 @@ interface State {
   sock?: Sockette;
   msgs: [string, string][];
   pending: [string, string];
+  zoomCanvas: boolean;
 }
 
 const App = () => {
+  const qr = useRef<HTMLCanvasElement>(null);
   const s = state.value;
   if (location.href.indexOf("#") == -1) {
     return (
@@ -115,6 +120,15 @@ const App = () => {
       </div>
     );
   }
+
+  // Load QR into canvas when ref not undefined
+  useEffect(() => {
+    if (qr)
+      QRCode.toCanvas(qr.current, location.href, {
+        errorCorrectionLevel: "L",
+        scale: s.zoomCanvas ? 8 : 1,
+      });
+  }, [qr, s.zoomCanvas, location.href]);
 
   const messageView = s.msgs.map((msg) => {
     if (!s.boxKP) return <></>;
@@ -166,9 +180,9 @@ const App = () => {
             id="channel"
             type="text"
             value={s.pass}
-            onInput={(evt) => {
+            onInput={async (evt) => {
               location.hash = `#${(evt.target as HTMLInputElement).value}`;
-              reconnect();
+              await reconnect();
             }}
           />
         </h1>
@@ -193,11 +207,14 @@ const App = () => {
             random
           </button>
         </p>
-        {s.count !== undefined && (
-          <p id="count">
-            {s.count} online
-          </p>
-        )}
+        {s.count !== undefined && <p id="count">{s.count} online</p>}
+        <canvas
+          id="qr"
+          ref={qr}
+          onClick={() => {
+            state.value = { ...state.value, zoomCanvas: !s.zoomCanvas };
+          }}
+        />
       </header>
       <main>
         <dl>{messageView}</dl>
