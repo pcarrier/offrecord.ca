@@ -293,7 +293,7 @@ const App = () => {
           <textarea
             id="msg"
             value={s.pending[1]}
-            placeholder="Write your messages here. Enter to send, Shift+Enter for multiple lines."
+            placeholder="Write your messages here. Shift+Enter to send."
             onInput={(evt) => {
               let tgt = evt.target as HTMLTextAreaElement;
               state.value = {
@@ -302,7 +302,7 @@ const App = () => {
               };
             }}
             onKeyDown={(evt) => {
-              if (evt.key === "Enter" && !evt.shiftKey) {
+              if (evt.key === "Enter" && evt.shiftKey) {
                 evt.preventDefault();
                 (evt.target as HTMLTextAreaElement).form?.requestSubmit();
               }
