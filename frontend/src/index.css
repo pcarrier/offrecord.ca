@@ -139,4 +139,5 @@ canvas#qr {
   top: 0;
   right: 0;
   cursor: pointer;
+  border-bottom-left-radius: 5%;
 }
