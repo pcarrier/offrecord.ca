@@ -293,18 +293,21 @@ const App = () => {
           <textarea
             id="msg"
             value={s.pending[1]}
-            placeholder="Write your messages here. Shift+Enter to send."
             onInput={(evt) => {
-              let tgt = evt.target as HTMLTextAreaElement;
+              const tgt = evt.target as HTMLTextAreaElement;
               state.value = {
                 ...state.value,
                 pending: [s.pending[0], tgt.value],
               };
             }}
             onKeyDown={(evt) => {
-              if (evt.key === "Enter" && evt.shiftKey) {
+              if (
+                evt.key === "Enter" &&
+                (evt.shiftKey || evt.ctrlKey || evt.metaKey)
+              ) {
                 evt.preventDefault();
-                (evt.target as HTMLTextAreaElement).form?.requestSubmit();
+                const tgt = evt.target as HTMLTextAreaElement;
+                tgt.form?.requestSubmit();
               }
             }}
             style={s.pending[1].split("\n").length > 1 ? { height: "5em" } : {}}
