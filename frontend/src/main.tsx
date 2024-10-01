@@ -13,7 +13,8 @@ import QRCode from "qrcode";
 const renderer = new Renderer();
 renderer.image = ({ href, title, text }) => {
   if (href.startsWith("data:image/")) {
-    return `<img src="${href}" alt="${text}" title="${title}" />`;
+    if (title) return `<img src="${href}" alt="${text}" title="${title}" />`;
+    else return `<img src="${href}" alt="${text}" />`;
   }
   if (title) {
     return `![${text}](${href} "${title}")`;
