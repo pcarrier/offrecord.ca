@@ -10,6 +10,10 @@ import { Renderer, parse } from "marked";
 import { useEffect, useRef } from "preact/hooks";
 import QRCode from "qrcode";
 
+if (location.href.indexOf("#") === -1) {
+  location.hash = "lobby";
+}
+
 const renderer = new Renderer();
 renderer.image = ({ href, title, text }) => {
   if (href.startsWith("data:image/")) {
@@ -109,45 +113,9 @@ interface State {
   zoomCanvas: boolean;
 }
 
-const initialChannelName = randomChannelName();
-
 const App = () => {
   const s = state.value;
   const qr = useRef<HTMLCanvasElement>(null);
-
-  if (location.href.indexOf("#") == -1) {
-    return (
-      <div id="intro">
-        <h1>⚠️ Warning</h1>
-        <p>You're about to join a secure chat system.</p>
-        <p>
-          The confidentiality of your messages relies on your channel name being
-          hard to guess and only exchanged securely.
-          <br />
-          Choose wisely, or keep it random:
-        </p>
-        <p>
-          <form
-            onSubmit={(evt) => {
-              window.location.hash = `#${(document.getElementById("channel") as HTMLInputElement).value}`;
-              evt.preventDefault();
-            }}
-          >
-            <input
-              id="channel"
-              type="text"
-              value={initialChannelName}
-              onFocus={(evt) => (evt.target as HTMLInputElement).select()}
-            />{" "}
-            <button type="submit">private</button>
-          </form>
-        </p>
-        <p>
-          <button onClick={() => (location.hash = "#lobby")}>lobby</button>
-        </p>
-      </div>
-    );
-  }
 
   // Load QR into canvas when ref not undefined
   useEffect(() => {
