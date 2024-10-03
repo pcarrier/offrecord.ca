@@ -117,11 +117,6 @@ header h1 {
   width: 9ch;
 }
 
-em.red {
-  font-style: normal;
-  color: #f00;
-}
-
 button:hover,
 input[type="submit"]:hover {
   cursor: pointer;

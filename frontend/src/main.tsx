@@ -109,9 +109,12 @@ interface State {
   zoomCanvas: boolean;
 }
 
+const initialChannelName = randomChannelName();
+
 const App = () => {
-  const qr = useRef<HTMLCanvasElement>(null);
   const s = state.value;
+  const qr = useRef<HTMLCanvasElement>(null);
+
   if (location.href.indexOf("#") == -1) {
     return (
       <div id="intro">
@@ -119,15 +122,28 @@ const App = () => {
         <p>You're about to join a secure chat system.</p>
         <p>
           The confidentiality of your messages relies on your channel name being
-          terribly hard to guess and only exchanged securely.
+          hard to guess and only exchanged securely.
+          <br />
+          Choose wisely, or keep it random:
         </p>
         <p>
-          <button onClick={() => (location.hash = "#lobby")}>
-            Lobby <em class="red">(public)</em>
-          </button>{" "}
-          <button onClick={() => (location.hash = randomChannelName())}>
-            Random channel
-          </button>
+          <form
+            onSubmit={(evt) => {
+              window.location.hash = `#${(document.getElementById("channel") as HTMLInputElement).value}`;
+              evt.preventDefault();
+            }}
+          >
+            <input
+              id="channel"
+              type="text"
+              value={initialChannelName}
+              onFocus={(evt) => (evt.target as HTMLInputElement).select()}
+            />{" "}
+            <button type="submit">private</button>
+          </form>
+        </p>
+        <p>
+          <button onClick={() => (location.hash = "#lobby")}>lobby</button>
         </p>
       </div>
     );
@@ -158,7 +174,7 @@ const App = () => {
         <>
           <dt>{new Date(msg[0]).toLocaleString()}</dt>
           <dd>
-            <em class="red">bad message</em>
+            <em>bad message</em>
           </dd>
         </>
       );
@@ -215,10 +231,10 @@ const App = () => {
           <button onClick={() => state.value.sock?.json({ clear: true })}>
             wipe
           </button>
-          <button onClick={() => (location.hash = "#lobby")}>lobby</button>{" "}
           <button onClick={() => (location.hash = randomChannelName())}>
             random
           </button>
+          <button onClick={() => (location.hash = "#lobby")}>lobby</button>{" "}
         </p>
         {s.count !== undefined && <p id="count">{s.count} online</p>}
         <canvas
