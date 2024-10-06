@@ -53,7 +53,7 @@ async function reconnect() {
     new TextEncoder().encode(pass),
     "PBKDF2",
     false,
-    ["deriveBits"],
+    ["deriveBits"]
   );
   const bits = await crypto.subtle.deriveBits(
     {
@@ -63,7 +63,7 @@ async function reconnect() {
       iterations: 100000,
     },
     key,
-    256,
+    256
   );
   const seed = new Uint8Array(bits);
   const boxKP = nacl.box.keyPair.fromSecretKey(seed);
@@ -116,6 +116,7 @@ interface State {
 const App = () => {
   const s = state.value;
   const qr = useRef<HTMLCanvasElement>(null);
+  const msg = useRef<HTMLTextAreaElement>(null);
 
   // Load QR into canvas when ref not undefined
   useEffect(() => {
@@ -126,16 +127,18 @@ const App = () => {
       });
   }, [qr, s.zoomCanvas, location.href]);
 
+  useEffect(() => msg.current?.focus(), [msg]);
+
   const messageView = s.msgs.map((msg) => {
     if (!s.boxKP) return <></>;
     const [nonce, payload] = decode(
-      Uint8Array.from(atob(msg[1]), (c) => c.charCodeAt(0)),
+      Uint8Array.from(atob(msg[1]), (c) => c.charCodeAt(0))
     );
     const raw = nacl.box.open(
       payload,
       nonce,
       s.boxKP.publicKey,
-      s.boxKP.secretKey,
+      s.boxKP.secretKey
     );
     if (raw === null) {
       return (
@@ -250,7 +253,7 @@ const App = () => {
               new TextEncoder().encode(JSON.stringify(s.pending)),
               nonce,
               s.boxKP.publicKey,
-              s.boxKP.secretKey,
+              s.boxKP.secretKey
             );
             state.value.sock?.send(encode([nonce, payload]));
             state.value = {
@@ -276,6 +279,7 @@ const App = () => {
           />
           <textarea
             id="msg"
+            ref={msg}
             value={s.pending[1]}
             onInput={(evt) => {
               const tgt = evt.target as HTMLTextAreaElement;
