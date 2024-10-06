@@ -245,7 +245,7 @@ const App = () => {
       <footer>
         <form
           onSubmit={(evt) => {
-            if (!s.boxKP) {
+            if (!s.boxKP || !s.pending[0] || !s.pending[1]) {
               return;
             }
             const nonce = nacl.randomBytes(nacl.box.nonceLength);
